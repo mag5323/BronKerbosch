@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Drawing connected graph via canvas</title>
+    </head>
+
+    <body>
+        <!--<form action="index.php" method="get">
+            <label for="vertices">How many vertices do you want?</label>
+            <input type="text" name="vertices" placeholder="node num" id="vertices" />
+            <input type="submit" value="submit" />
+            <button>refresh</button>
+        </form>-->
+
+        <canvas id="myCanvas" width="500" height="500"></canvas>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                var vertices = prompt("How may vertices do you wnat?");
+                var matrix = new Array();
+
+                for (var i = 0; i < vertices; i++) {
+                    matrix[i] = new Array();
+
+                    for (var j = i+1; j < vertices; j++) {
+                        matrix[i][j] = Math.random() < 0.5;
+                    }
+                }
+
+                console.log(matrix);
+
+                var ctx = document.getElementById('myCanvas').getContext('2d');
+                //var vertices = window.location.search.split("=")[1];
+
+                ctx.translate(300, 300);
+                ctx.font = "bold 32px Arial white";
+                ctx.fillStyle = "gray";
+
+                for (var j = 1; j <= vertices; j++) { // draw individual dots
+                    ctx.save();
+                    ctx.rotate(Math.PI * 2 / vertices);
+                    ctx.beginPath();
+                    //ctx.arc(0,12.5,5,0,Math.PI*2,true);
+                    ctx.arc(0, 150, 30, 0, Math.PI*2, true);
+                    ctx.fillText(j, -10, 160);
+                    ctx.stroke();
+                }
+
+                $("button").on("click", function(){
+                    window.location.href = 'index.php';
+                });
+            });
+        </script>
+    </body>
+</html>
