@@ -6,12 +6,6 @@
     </head>
 
     <body>
-        <!--<form action="index.php" method="get">
-            <label for="vertices">How many vertices do you want?</label>
-            <input type="text" name="vertices" placeholder="node num" id="vertices" />
-            <input type="submit" value="submit" />
-            <button>refresh</button>
-        </form>-->
 
         <canvas id="myCanvas" width="500" height="500"></canvas>
 
@@ -32,17 +26,15 @@
                 console.log(matrix);
 
                 var ctx = document.getElementById('myCanvas').getContext('2d');
-                //var vertices = window.location.search.split("=")[1];
 
                 ctx.translate(300, 300);
                 ctx.font = "bold 32px Arial white";
                 ctx.fillStyle = "gray";
 
-                for (var j = 1; j <= vertices; j++) { // draw individual dots
+                for (var j = 1; j <= vertices; j++) {
                     ctx.save();
                     ctx.rotate(Math.PI * 2 / vertices);
                     ctx.beginPath();
-                    //ctx.arc(0,12.5,5,0,Math.PI*2,true);
                     ctx.arc(0, 150, 30, 0, Math.PI*2, true);
                     ctx.fillText(j, -10, 160);
                     ctx.stroke();
