@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Drawing connected graph via canvas</title>
+    </head>
+
+    <body>
+
+        <canvas id="canvasVertice" width="500" height="500" style="position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
+        <canvas id="canvasEdge" width="500" height="500" style="position: absolute; left: 0; top: 0; z-index: 1;"></canvas>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                var vertices = prompt("How may vertices do you want? (v<11)");
+
+                if (vertices > 15) {
+                    alert('V should less than 15');
+                    return false;
+                }
+
+                var matrix = new Array();
+                var positions = new Array();
+
+                // init random boolean matrix
+                for (var i = 0; i < vertices; i++) {
+                    matrix[i] = new Array();
+
+                    for (var j = i+1; j < vertices; j++) {
+                        matrix[i][j] = Math.random() < 0.5;
+                    }
+                }
+
+                // init vertices
+                var ctxV = document.getElementById('canvasVertice').getContext('2d');
+                var angle = Math.PI * 2 / vertices;
+
+                ctxV.translate(300, 300);
+                ctxV.font = "bold 32px Arial white";
+                ctxV.fillStyle = "gray";
+
+                for (var i = 0; i < vertices; i++) {
+                    ctxV.save();
+                    ctxV.beginPath();
+
+                    var x = 150 * Math.cos(angle * (i + 1));
+                    var y = 150 * Math.sin(angle * (i + 1));
+                    positions.push(new Array(x, y));
+
+                    ctxV.arc(x, y, 30, 0, Math.PI*2, false);
+                    ctxV.fillText((i + 1), x-10, y+10);
+                    ctxV.stroke();
+                }
+
+                // init edge
+                var ctxE = document.getElementById('canvasEdge').getContext('2d');
+                ctxE.translate(300, 300);
+
+                for (var i = 0; i < vertices; i++) {
+                    ctxE.save();
+                    ctxE.beginPath();
+
+                    for (var j = i+1; j < vertices; j++) {
+                        if (matrix[i][j]) {
+                            ctxE.moveTo(positions[i][0], positions[i][1]);
+                            ctxE.lineTo(positions[j][0], positions[j][1]);
+                            console.log(positions[i] + " : " +  positions[j]);
+                        }
+                    }
+                    ctxE.stroke();
+                }
+
+                $("button").on("click", function(){
+                    window.location.href = 'index.php';
+                });
+            });
+        </script>
+    </body>
+</html>
